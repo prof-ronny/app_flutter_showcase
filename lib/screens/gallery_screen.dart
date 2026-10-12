@@ -89,32 +89,37 @@ class _GalleryScreenState extends State<GalleryScreen> {
                       PointerDeviceKind.trackpad,
                     }),
                     child: PageView.builder(
-                        controller: controller,
-                        itemCount: 3,
-                        onPageChanged: (value) =>
-                            setState(() => current = value),
-                        itemBuilder: (context, index) {
-                          final distance = (page - index).clamp(-1.0, 1.0);
-                          return Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Transform(
-                                alignment: Alignment.center,
-                                transform: Matrix4.identity()
-                                  ..setEntry(3, 2, .0015)
-                                  ..rotateY(distance * .38)
-                                  ..scale(1 - distance.abs() * .12),
-                                child: Semantics(
-                                    button: true,
-                                    label:
-                                        'Abrir ${GradientCard.titles[index]}',
-                                    child: GestureDetector(
-                                        onTap: () => open(index),
-                                        child: Hero(
-                                            tag: 'card-$index',
-                                            child:
-                                                GradientCard(index: index)))),
-                              ));
-                        }),
+                      controller: controller,
+                      itemCount: 3,
+                      onPageChanged: (value) => setState(() => current = value),
+                      itemBuilder: (context, index) {
+                        final distance = (page - index).clamp(-1.0, 1.0);
+
+                        return ClipRect(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Transform(
+                              alignment: Alignment.center,
+                              transform: Matrix4.identity()
+                                ..setEntry(3, 2, .0005)
+                                ..rotateY(distance * .25)
+                                ..scale(1 - distance.abs() * .15),
+                              child: Semantics(
+                                button: true,
+                                label: 'Abrir ${GradientCard.titles[index]}',
+                                child: GestureDetector(
+                                  onTap: () => open(index),
+                                  child: Hero(
+                                    tag: 'card-$index',
+                                    child: GradientCard(index: index),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   )),
               const SizedBox(height: 20),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
